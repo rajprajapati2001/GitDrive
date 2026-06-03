@@ -6,7 +6,6 @@
 import express from "express";
 import path from "path";
 import { fileURLToPath } from "url";
-import { createServer as createViteServer } from "vite";
 import { Octokit } from "@octokit/rest";
 import dotenv from "dotenv";
 
@@ -755,6 +754,7 @@ async function startServer() {
 
   // Vite integration middleware
   if (process.env.NODE_ENV !== "production" && !process.env.VERCEL) {
+    const { createServer: createViteServer } = await import("vite");
     const vite = await createViteServer({
       server: { middlewareMode: true },
       appType: "spa",
