@@ -1,0 +1,193 @@
+{
+  "project": {
+    "name": "developer-portfolio-ecosystem",
+    "version": "3.4.0",
+    "codename": "aurora-stream",
+    "meta": {
+      "author": "Full-Stack Engineer",
+      "license": "MIT",
+      "repository": "https://github.com/portfolio/monorepo",
+      "productionUrl": "https://portfolio.dev"
+    }
+  },
+  "environments": {
+    "active": "development",
+    "configurations": {
+      "development": {
+        "debug": true,
+        "sourceMaps": true,
+        "allowExecutionTrace": true,
+        "logLevel": "trace"
+      },
+      "staging": {
+        "debug": false,
+        "sourceMaps": true,
+        "allowExecutionTrace": false,
+        "logLevel": "info"
+      },
+      "production": {
+        "debug": false,
+        "sourceMaps": false,
+        "allowExecutionTrace": false,
+        "logLevel": "error"
+      }
+    }
+  },
+  "theme": {
+    "palette": {
+      "primaryDark": "#CF0B17",
+      "primaryLight": "#FA5301",
+      "accentVeryLight": "#FF8703",
+      "backgroundDefault": "#0F172A",
+      "surfaceCard": "#1E293B"
+    },
+    "typography": {
+      "fontFamily": "JetBrains Mono, Inter, system-ui",
+      "baseFontSize": "14px",
+      "lineHeight": 1.6
+    },
+    "layout": {
+      "sidebarDefaultOpen": true,
+      "defaultViewMode": "grid",
+      "denseListRowHeight": 42
+    }
+  },
+  "server": {
+    "host": "0.0.0.0",
+    "ports": {
+      "gateway": 8080,
+      "authService": 8081,
+      "projectsService": 8082,
+      "analyticsEngine": 8083,
+      "webSocketHub": 8084
+    },
+    "cors": {
+      "allowedOrigins": [
+        "http://localhost:3000",
+        "https://*.portfolio.dev",
+        "https://portfolio.dev"
+      ],
+      "methods": ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
+      "allowCredentials": true,
+      "maxAge": 86400
+    },
+    "timeouts": {
+      "keepAlive": 5000,
+      "requestHeader": 10000,
+      "payloadProcessing": 30000
+    }
+  },
+  "security": {
+    "rateLimiter": {
+      "windowMs": 900000,
+      "maxRequestsPerWindow": {
+        "standard": 100,
+        "apiGateway": 1000,
+        "authEndpoints": 5
+      }
+    },
+    "encryption": {
+      "algorithm": "aes-256-gcm",
+      "saltRounds": 12,
+      "keyDerivation": "pbkdf2"
+    },
+    "tokens": {
+      "jwtIssuer": "portfolio-auth-authority",
+      "accessTokenExpiry": "15m",
+      "refreshTokenExpiry": "7d",
+      "cookieOptions": {
+        "httpOnly": true,
+        "secure": true,
+        "sameSite": "strict"
+      }
+    },
+    "headers": {
+      "contentSecurityPolicy": "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; img-src 'self' data: https://images.unsplash.com;",
+      "xFrameOptions": "DENY",
+      "xContentTypeOptions": "nosniff",
+      "referrerPolicy": "strict-origin-when-cross-origin"
+    }
+  },
+  "databases": {
+    "primaryPostgres": {
+      "pooling": {
+        "minConnections": 5,
+        "maxConnections": 30,
+        "idleTimeoutMs": 10000,
+        "connectionTimeoutMs": 2000
+      },
+      "replication": {
+        "readReplicasEnabled": true,
+        "replicaHosts": ["replica-01.db.portfolio.internal", "replica-02.db.portfolio.internal"]
+      },
+      "migrations": {
+        "autoRunOnBoot": true,
+        "directory": "./infra/migrations/postgres"
+      }
+    },
+    "cacheRedis": {
+      "clusterMode": false,
+      "sentinels": [],
+      "ttlDefaults": {
+        "projectMetadata": 3600,
+        "gitHubApiResponse": 600,
+        "sessionToken": 86400
+      },
+      "evictionPolicy": "volatile-lru"
+    },
+    "documentMongo": {
+      "replicaSet": "rs0",
+      "writeConcern": "majority",
+      "readPreference": "secondaryPreferred",
+      "dbName": "portfolio_analytics"
+    }
+  },
+  "thirdPartyIntegrations": {
+    "gitHubApi": {
+      "baseUrl": "https://api.github.com",
+      "timeout": 8000,
+      "rateLimitBuffer": 50,
+      "endpoints": {
+        "userData": "/users/{username}",
+        "repos": "/users/{username}/repos",
+        "contents": "/repos/{owner}/{repo}/contents/{path}"
+      },
+      "caching": {
+        "enabled": true,
+        "strategy": "stale-while-revalidate"
+      }
+    },
+    "awsS3": {
+      "bucketName": "portfolio-assets-prod",
+      "region": "us-east-1",
+      "cdnUrl": "https://cdn.portfolio.dev",
+      "multipartUpload": {
+        "thresholdBytes": 5242880,
+        "chunkSizeBytes": 5242880
+      }
+    },
+    "monitoring": {
+      "sentry": {
+        "dsn": "https://examplePublicKey@o0.ingest.sentry.io/0",
+        "tracesSampleRate": 0.25,
+        "environment": "production"
+      },
+      "prometheus": {
+        "enabled": true,
+        "metricsPath": "/cluster-metrics",
+        "collectDefaultMetrics": true
+      }
+    }
+  },
+  "featureFlags": {
+    "enableGitDriveStorage": true,
+    "enableRealTimeWebSockets": true,
+    "enablePublicSharingLinks": true,
+    "enableIframeTabPreview": false,
+    "maintenanceMode": false,
+    "betaTestingGroup": {
+      "userIds": [],
+      "allowRolloutPercentage": 10.0
+    }
+  }
+}

@@ -1,0 +1,185 @@
+{
+  "database_snapshot": {
+    "cluster_id": "db-cluster-useast-0994x",
+    "timestamp": "2026-06-26T22:50:17Z",
+    "schema_version": "2.4.1"
+  },
+  "roles": [
+    {
+      "role_id": "ROL-001",
+      "name": "SuperAdmin",
+      "description": "Unrestricted administrative control over global storage clusters and user management.",
+      "permissions": ["system:*", "users:*", "storage:*", "billing:*"]
+    },
+    {
+      "role_id": "ROL-002",
+      "name": "DeveloperAdmin",
+      "description": "Administrative access bounded to repository configurations and API integrations.",
+      "permissions": ["storage:*", "users:view", "logs:read"]
+    },
+    {
+      "role_id": "ROL-003",
+      "name": "StandardUser",
+      "description": "Standard read/write operational clearance on personal drive paths.",
+      "permissions": ["storage:read", "storage:write", "users:profile-patch"]
+    }
+  ],
+  "users": [
+    {
+      "user_id": "USR-88201",
+      "role_id": "ROL-001",
+      "account_status": "active",
+      "profile": {
+        "first_name": "Sarah",
+        "last_name": "Garrison",
+        "email": "s.garrison@enterprise-cloud.io",
+        "avatar_url": "https://images.unsplash.com/photo-1534528741775-53994a69daeb",
+        "joined_at": "2024-03-12T08:14:22Z"
+      },
+      "authentication": {
+        "mfa_enabled": true,
+        "mfa_method": "TOTP",
+        "last_login_ip": "198.51.100.42",
+        "password_vault_ref": "secret/vault/pwd_88201_gcm"
+      },
+      "gitdrive_config": {
+        "is_configured": true,
+        "connected_repo_owner": "garrison-codes",
+        "target_repository": "secure-vault-mesh",
+        "branch": "main",
+        "api_quota": {
+          "hourly_limit": 5000,
+          "hourly_remaining": 4912
+        }
+      }
+    },
+    {
+      "user_id": "USR-10943",
+      "role_id": "ROL-002",
+      "account_status": "active",
+      "profile": {
+        "first_name": "Alex",
+        "last_name": "Kincaid",
+        "email": "kincaid.dev@portfolio.net",
+        "avatar_url": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d",
+        "joined_at": "2025-01-19T14:20:00Z"
+      },
+      "authentication": {
+        "mfa_enabled": true,
+        "mfa_method": "WebAuthn",
+        "last_login_ip": "203.0.113.89",
+        "password_vault_ref": "secret/vault/pwd_10943_gcm"
+      },
+      "gitdrive_config": {
+        "is_configured": true,
+        "connected_repo_owner": "akincaid-dev",
+        "target_repository": "cdn-storage-core",
+        "branch": "production",
+        "api_quota": {
+          "hourly_limit": 5000,
+          "hourly_remaining": 3120
+        }
+      }
+    },
+    {
+      "user_id": "USR-44029",
+      "role_id": "ROL-003",
+      "account_status": "suspended",
+      "profile": {
+        "first_name": "Jordan",
+        "last_name": "Vance",
+        "email": "jvance99@gmail.com",
+        "avatar_url": null,
+        "joined_at": "2025-08-30T21:44:05Z"
+      },
+      "authentication": {
+        "mfa_enabled": false,
+        "mfa_method": null,
+        "last_login_ip": "192.0.2.145",
+        "password_vault_ref": "secret/vault/pwd_44029_gcm"
+      },
+      "gitdrive_config": {
+        "is_configured": false,
+        "connected_repo_owner": null,
+        "target_repository": null,
+        "branch": null,
+        "api_quota": {
+          "hourly_limit": 60,
+          "hourly_remaining": 0
+        }
+      }
+    }
+  ],
+  "file_registry": [
+    {
+      "file_id": "FIL-99021a",
+      "owner_id": "USR-88201",
+      "node_type": "file",
+      "metadata": {
+        "name": "system_schema_v2.sql",
+        "extension": "sql",
+        "mime_type": "text/x-sql",
+        "size_bytes": 142850,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "git_ref": {
+        "sha": "7f18b528a9b2d3568c85743bcf2e7d704af3212c",
+        "path": "uploads/drive/engineering/system_schema_v2.sql",
+        "download_url": "https://raw.githubusercontent.com/garrison-codes/secure-vault-mesh/main/uploads/drive/engineering/system_schema_v2.sql"
+      },
+      "timestamps": {
+        "created_at": "2026-02-14T03:11:45Z",
+        "last_modified": "2026-05-20T18:22:10Z"
+      }
+    },
+    {
+      "file_id": "FIL-40119b",
+      "owner_id": "USR-10943",
+      "node_type": "file",
+      "metadata": {
+        "name": "hero_background.png",
+        "extension": "png",
+        "mime_type": "image/png",
+        "size_bytes": 4892010,
+        "sha256": "8139a3f2d2454a434c9c0d16dfd8471c6258f33d7b42f2b3bfa0b7df3c90cb54"
+      },
+      "git_ref": {
+        "sha": "b55a8286ca07926127cb41399cb15124b810d291",
+        "path": "uploads/drive/assets/hero_background.png",
+        "download_url": "https://raw.githubusercontent.com/akincaid-dev/cdn-storage-core/production/uploads/drive/assets/hero_background.png"
+      },
+      "timestamps": {
+        "created_at": "2026-06-01T12:00:00Z",
+        "last_modified": "2026-06-25T11:45:32Z"
+      }
+    }
+  ],
+  "audit_logs": [
+    {
+      "log_id": "LOG-7720194",
+      "user_id": "USR-88201",
+      "severity": "INFO",
+      "action": "FILE_PREVIEW_OPEN",
+      "context": {
+        "target_file_id": "FIL-99021a",
+        "interface": "Workspace Frame Preview (Iframe)",
+        "ip_address": "198.51.100.42",
+        "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7)"
+      },
+      "timestamp": "2026-06-26T22:15:00Z"
+    },
+    {
+      "log_id": "LOG-7720235",
+      "user_id": "USR-44029",
+      "severity": "WARNING",
+      "action": "CREDENTIAL_BIND_FAILED",
+      "context": {
+        "reason": "Bad Credentials / Invalid GitHub Access Token Target",
+        "attempted_repo": "jordanv/private-backup",
+        "ip_address": "192.0.2.145",
+        "user_agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64)"
+      },
+      "timestamp": "2026-06-26T22:42:11Z"
+    }
+  ]
+}
