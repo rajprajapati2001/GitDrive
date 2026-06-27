@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Customer Experience Survey</title>
+<style>
+/* Modern Reset & Base Styles */
+* {
+box-sizing: border-box;
+margin: 0;
+padding: 0;
+}
+
+body {
+font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+min-height: 100vh;
+display: flex;
+justify-content: center;
+align-items: center;
+padding: 20px;
+color: #333;
+}
+
+/* Container Card */
+main {
+background-color: #ffffff;
+width: 100%;
+max-width: 650px;
+padding: 40px;
+border-radius: 16px;
+box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+}
+
+/* Typography */
+header {
+text-align: center;
+margin-bottom: 30px;
+}
+
+h1 {
+font-size: 28px;
+color: #2c3e50;
+margin-bottom: 8px;
+}
+
+p.description {
+color: #7f8c8d;
+font-size: 14px;
+}
+
+/* Form Layout */
+form {
+display: flex;
+flex-direction: column;
+gap: 20px;
+}
+
+.form-group {
+display: flex;
+flex-direction: column;
+gap: 6px;
+}
+
+label {
+font-weight: 600;
+font-size: 14px;
+color: #34495e;
+}
+
+/* Inputs & Form Controls */
+input[type="text"],
+input[type="email"],
+input[type="number"],
+select,
+textarea {
+width: 100%;
+padding: 12px 16px;
+border: 2px solid #e2e8f0;
+border-radius: 8px;
+font-size: 15px;
+color: #2d3748;
+background-color: #f8fafc;
+transition: all 0.3s ease;
+outline: none;
+}
+
+input:focus, select:focus, textarea:focus {
+border-color: #3182ce;
+background-color: #fff;
+box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.15);
+}
+
+/* Fieldsets & Complex Selections */
+fieldset {
+border: 2px solid #edf2f7;
+border-radius: 8px;
+padding: 16px 20px;
+background-color: #f8fafc;
+}
+
+legend {
+font-weight: 600;
+font-size: 14px;
+color: #34495e;
+padding: 0 8px;
+}
+
+.radio-group, .checkbox-group {
+display: flex;
+flex-direction: column;
+gap: 10px;
+margin-top: 8px;
+}
+
+.inline-option {
+display: flex;
+align-items: center;
+gap: 10px;
+cursor: pointer;
+font-size: 15px;
+}
+
+.inline-option input {
+width: 18px;
+height: 18px;
+cursor: pointer;
+accent-color: #3182ce;
+}
+
+/* Submit Button */
+button[type="submit"] {
+margin-top: 10px;
+padding: 14px;
+background-color: #3182ce;
+color: white;
+border: none;
+border-radius: 8px;
+font-size: 16px;
+font-weight: 600;
+cursor: pointer;
+transition: background-color 0.2s ease, transform 0.1s ease;
+box-shadow: 0 4px 6px rgba(49, 130, 206, 0.2);
+}
+
+button[type="submit"]:hover {
+background-color: #2b6cb0;
+}
+
+button[type="submit"]:active {
+transform: scale(0.98);
+}
+
+/* Responsive Design */
+@media (max-width: 480px) {
+main {
+padding: 20px;
+}
+h1 {
+font-size: 22px;
+}
+}
+</style>
+</head>
+<body>
+
+<main>
+<header>
+<h1>Feedback Survey Form</h1>
+<p class="description">We value your input! Please take a moment to share your thoughts.</p>
+</header>
+
+<form id="survey-form">
+<div class="form-group">
+<label for="name">Full Name</label>
+<input type="text" id="name" name="name" placeholder="John Doe" required>
+</div>
+
+<div class="form-group">
+<label for="email">Email Address</label>
+<input type="email" id="email" name="email" placeholder="johndoe@example.com" required>
+</div>
+
+<div class="form-group">
+<label for="age">Age (Optional)</label>
+<input type="number" id="age" name="age" min="1" max="150" placeholder="e.g. 25">
+</div>
+
+<div class="form-group">
+<label for="feedback-type">Type of Feedback</label>
+<select id="feedback-type" name="feedback-type">
+<option value="" disabled selected>Select an option...</option>
+<option value="positive">Positive Compliment</option>
+<option value="suggestion">Feature Suggestion</option>
+<option value="negative">Complaint / Issue</option>
+<option value="other">Other</option>
+</select>
+</div>
+
+<fieldset>
+<legend>Overall Satisfaction</legend>
+<div class="radio-group">
+<label class="inline-option">
+<input type="radio" name="satisfaction" value="excellent" required>
+Excellent
+</label>
+<label class="inline-option">
+<input type="radio" name="satisfaction" value="good">
+Good
+</label>
+<label class="inline-option">
+<input type="radio" name="satisfaction" value="neutral">
+Neutral
+</label>
+<label class="inline-option">
+<input type="radio" name="satisfaction" value="poor">
+Poor
+</label>
+</div>
+</fieldset>
+
+<fieldset>
+<legend>Which features do you use most?</legend>
+<div class="checkbox-group">
+<label class="inline-option">
+<input type="checkbox" id="feature-dashboard" name="features" value="dashboard">
+Analytics Dashboard
+</label>
+<label class="inline-option">
+<input type="checkbox" id="feature-reports" name="features" value="reports">
+Automated Reports
+</label>
+<label class="inline-option">
+<input type="checkbox" id="feature-api" name="features" value="api">
+Developer API
+</label>
+<label class="inline-option">
+<input type="checkbox" id="feature-support" name="features" value="support">
+24/7 Live Support
+</label>
+</div>
+</fieldset>
+
+<div class="form-group">
+<label for="comments">Additional Comments</label>
+<textarea id="comments" name="comments" rows="4" placeholder="Tell us how we can improve..."></textarea>
+</div>
+
+<button type="submit">Submit Feedback</button>
+</form>
+</main>
+
+</body>
+</html>
