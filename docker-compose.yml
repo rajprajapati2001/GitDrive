@@ -1,0 +1,18 @@
+version: '3.8'
+
+services:
+  gitdrive:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: gitimage_drive
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production
+    env_file:
+      - .env
+    volumes:
+      # Ensures runtime changes or mock engine fallbacks persist outside the container boundaries
+      - ./uploads:/app/uploads
