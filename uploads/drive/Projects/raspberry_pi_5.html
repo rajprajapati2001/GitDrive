@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Raspberry Pi 5 Architecture & Specifications</title>
+<style>
+/* Modern Design System Reset */
+* {
+box-sizing: border-box;
+margin: 0;
+padding: 0;
+}
+
+:root {
+--primary: #c51a4a; /* Classic Raspberry Pi Pink/Red */
+--primary-dark: #a01037;
+--secondary: #00765c; /* Emerald Accents */
+--dark: #0f172a;
+--bg-canvas: #f8fafc;
+--bg-card: #ffffff;
+--text-main: #334155;
+--text-muted: #64748b;
+}
+
+body {
+font-family: 'Segoe UI', system-ui, sans-serif;
+background-color: var(--bg-canvas);
+color: var(--text-main);
+line-height: 1.6;
+}
+
+/* Navbar Styling */
+header {
+background-color: var(--dark);
+color: white;
+position: sticky;
+top: 0;
+z-index: 100;
+box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+}
+
+.nav-container {
+max-width: 1200px;
+margin: 0 auto;
+padding: 16px 24px;
+display: flex;
+justify-content: space-between;
+align-items: center;
+}
+
+.brand {
+display: flex;
+align-items: center;
+gap: 10px;
+font-weight: 700;
+font-size: 20px;
+color: #fff;
+text-decoration: none;
+}
+
+.brand span {
+color: var(--primary);
+}
+
+nav ul {
+display: flex;
+list-style: none;
+gap: 20px;
+}
+
+nav ul li a {
+color: #94a3b8;
+text-decoration: none;
+font-size: 14px;
+font-weight: 500;
+transition: color 0.2s;
+}
+
+nav ul li a:hover {
+color: var(--primary);
+}
+
+/* Hero Banner */
+.hero {
+background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+color: white;
+padding: 80px 24px;
+text-align: center;
+position: relative;
+overflow: hidden;
+}
+
+.hero::before {
+content: '';
+position: absolute;
+top: 0; left: 0; right: 0; bottom: 0;
+background: radial-gradient(circle at 80% 20%, rgba(197, 26, 74, 0.15) 0%, transparent 50%);
+pointer-events: none;
+}
+
+.hero h1 {
+font-size: 42px;
+font-weight: 800;
+margin-bottom: 16px;
+letter-spacing: -1px;
+}
+
+.hero h1 span {
+color: var(--primary);
+}
+
+.hero p {
+font-size: 18px;
+color: #94a3b8;
+max-width: 700px;
+margin: 0 auto 24px auto;
+}
+
+.badge-generation {
+background-color: rgba(197, 26, 74, 0.2);
+color: #f43f5e;
+border: 1px solid rgba(197, 26, 74, 0.4);
+padding: 4px 12px;
+border-radius: 20px;
+font-size: 12px;
+font-weight: 600;
+text-transform: uppercase;
+display: inline-block;
+margin-bottom: 16px;
+}
+
+/* Main Content wrapper */
+.container {
+max-width: 1200px;
+margin: 40px auto;
+padding: 0 24px;
+}
+
+/* Grid Layout sections */
+.grid-two-col {
+display: grid;
+grid-template-columns: 1fr 1fr;
+gap: 40px;
+margin-bottom: 60px;
+align-items: center;
+}
+
+@media (max-width: 768px) {
+.grid-two-col {
+grid-template-columns: 1fr;
+}
+}
+
+/* Image Display Box */
+.board-visualizer {
+background-color: #1e293b;
+border-radius: 16px;
+padding: 30px;
+box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+display: flex;
+flex-direction: column;
+align-items: center;
+justify-content: center;
+}
+
+.board-visualizer p {
+color: #94a3b8;
+font-size: 13px;
+margin-top: 15px;
+text-align: center;
+}
+
+/* Architecture Feature Cards */
+.features-section {
+margin-bottom: 60px;
+}
+
+.section-title {
+font-size: 28px;
+color: var(--dark);
+margin-bottom: 8px;
+font-weight: 700;
+}
+
+.section-subtitle {
+color: var(--text-muted);
+font-size: 15px;
+margin-bottom: 30px;
+}
+
+.features-grid {
+display: grid;
+grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+gap: 24px;
+}
+
+.card {
+background-color: var(--bg-card);
+border-radius: 12px;
+padding: 24px;
+box-shadow: 0 4px 6px -1px rgba(0,0,0,0.02), 0 2px 4px -1px rgba(0,0,0,0.02);
+border: 1px solid #e2e8f0;
+transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.card:hover {
+transform: translateY(-4px);
+box-shadow: 0 12px 20px rgba(0,0,0,0.05);
+}
+
+.card-icon {
+width: 40px;
+height: 40px;
+border-radius: 8px;
+background-color: rgba(197, 26, 74, 0.1);
+color: var(--primary);
+display: flex;
+align-items: center;
+justify-content: center;
+margin-bottom: 16px;
+font-weight: bold;
+}
+
+.card h3 {
+font-size: 18px;
+color: var(--dark);
+margin-bottom: 8px;
+font-weight: 600;
+}
+
+.card p {
+font-size: 14px;
+color: var(--text-muted);
+}
+
+/* Specs Table styling */
+.specs-table-wrapper {
+background-color: var(--bg-card);
+border-radius: 12px;
+border: 1px solid #e2e8f0;
+overflow: hidden;
+box-shadow: 0 4px 6px rgba(0,0,0,0.01);
+margin-bottom: 60px;
+}
+
+table {
+width: 100%;
+border-collapse: collapse;
+text-align: left;
+font-size: 15px;
+}
+
+th, td {
+padding: 16px 24px;
+}
+
+th {
+background-color: #f1f5f9;
+color: var(--dark);
+font-weight: 600;
+}
+
+tr {
+border-bottom: 1px solid #edf2f7;
+}
+
+tr:last-child {
+border-bottom: none;
+}
+
+tr:hover td {
+background-color: #f8fafc;
+}
+
+.tech-highlight {
+font-weight: 600;
+color: var(--secondary);
+}
+
+/* Footer area */
+footer {
+background-color: var(--dark);
+color: #64748b;
+text-align: center;
+padding: 40px 24px;
+font-size: 14px;
+border-top: 1px solid #1e293b;
+}
+
+footer a {
+color: #94a3b8;
+text-decoration: none;
+}
+
+footer a:hover {
+color: white;
+}
+</style>
+</head>
+<body>
+
+<header>
+<div class="nav-container">
+<a href="#" class="brand">Raspberry<span>Pi 5</span></a>
+<nav>
+<ul>
+<li><a href="#overview">Overview</a></li>
+<li><a href="#architecture">Architecture</a></li>
+<li><a href="#specifications">Specifications</a></li>
+</ul>
+</nav>
+</div>
+</header>
+
+<section class="hero" id="overview">
+<span class="badge-generation">Generation 5 Flagship</span>
+<h1>The Anything Computer. <span>Optimized.</span></h1>
+<p>Featuring 2-3x the processing speeds, advanced silicon architectures designed completely in-house, and support for dual-4K video output pipelines.</p>
+</section>
+
+<div class="container">
+
+<section class="grid-two-col">
+<div>
+<h2 class="section-title">The RP1 Silicon Breakthrough</h2>
+<p class="section-subtitle" style="margin-bottom: 16px;">A completely new I/O paradigm shift for single-board computing ecosystems.</p>
+<p style="margin-bottom: 16px; color: var(--text-main);">The Raspberry Pi 5 represents a groundbreaking architectural departure from its predecessors. Powered by the <strong>Broadcom BCM2712</strong> processor, it offloads critical peripheral functions to a proprietary chip: the <strong>RP1 Southbridge</strong>.</p>
+<p style="color: var(--text-muted); font-size: 14px;">This dedicated system separation delivers massive bandwidth increases to USB controllers, network stacks, and camera sensor pipelines, enabling an exceptionally fast desktop user response layout.</p>
+</div>
+
+<div class="board-visualizer">
+<svg viewBox="0 0 400 280" width="100%" height="auto" style="max-width: 380px;">
+<rect x="10" y="10" width="380" height="260" rx="14" fill="#0369a1" stroke="#0284c7" stroke-width="3"/>
+
+<rect x="140" y="70" width="90" height="90" rx="6" fill="#334155" stroke="#475569" stroke-width="2"/>
+<text x="185" y="115" fill="white" font-family="sans-serif" font-size="11" font-weight="bold" text-anchor="middle">BCM2712</text>
+<text x="185" y="130" fill="#94a3b8" font-family="sans-serif" font-size="9" text-anchor="middle">2.4GHz CPU</text>
+
+<rect x="40" y="150" width="70" height="70" rx="4" fill="#475569" stroke="#64748b" stroke-width="2"/>
+<text x="75" y="190" fill="white" font-family="sans-serif" font-size="11" font-weight="bold" text-anchor="middle">RP1</text>
+
+<rect x="340" y="30" width="52" height="45" rx="3" fill="#1e293b"/>
+<text x="366" y="56" fill="#cbd5e1" font-family="sans-serif" font-size="9" text-anchor="middle">USB 3.0</text>
+
+<rect x="340" y="90" width="52" height="45" rx="3" fill="#1e293b"/>
+<text x="366" y="116" fill="#cbd5e1" font-family="sans-serif" font-size="9" text-anchor="middle">USB 2.0</text>
+
+<rect x="340" y="160" width="52" height="55" rx="3" fill="#64748b"/>
+<text x="366" y="192" fill="white" font-family="sans-serif" font-size="9" text-anchor="middle">Gigabit</text>
+
+<rect x="110" y="10" width="25" height="15" rx="2" fill="#cbd5e1"/>
+<rect x="150" y="10" width="25" height="15" rx="2" fill="#cbd5e1"/>
+<text x="142" y="36" fill="#94a3b8" font-family="sans-serif" font-size="8" text-anchor="middle">Dual 4K HDMI</text>
+
+<circle cx="50" cy="45" r="14" fill="#c51a4a"/>
+<circle cx="50" cy="38" r="6" fill="#00765c"/>
+</svg>
+<p>Architectural Reference Layout Map of the Raspberry Pi 5 PCB.</p>
+</div>
+</section>
+
+<section class="features-section" id="architecture">
+<h2 class="section-title">Key Architectural Pillars</h2>
+<p class="section-subtitle">What makes the 5th generation vastly superior to alternative compute architectures.</p>
+
+<div class="features-grid">
+<div class="card">
+<div class="card-icon">CPU</div>
+<h3>Cortex-A76 Silicon</h3>
+<p>Quad-core 64-bit ARM microarchitecture running at 2.4GHz. Leverages advanced cryptography extensions and increased per-core caches.</p>
+</div>
+<div class="card">
+<div class="card-icon">GPU</div>
+<h3>VideoCore VII</h3>
+<p>Clocked dynamically at 800MHz. Full hardware support for open graphics pipelines (Vulkan 1.2, OpenGL ES 3.1) alongside dual concurrent 4K output capabilities.</p>
+</div>
+<div class="card">
+<div class="card-icon">PCIe</div>
+<h3>PCI Express interface</h3>
+<p>A major design expansion introducing a user-accessible single-lane Gen 2 interface, permitting ultra-fast connections directly to NVMe M.2 solid-state storage arrays.</p>
+</div>
+<div class="card">
+<div class="card-icon">PWR</div>
+<h3>Smart Power Management</h3>
+<p>Features a dedicated onboard Power Button alongside a smart real-time clock (RTC) module with external backup power configurations.</p>
+</div>
+</div>
+</section>
+
+<section id="specifications">
+<h2 class="section-title">Technical Specifications Matrix</h2>
+<p class="section-subtitle">Detailed engineering breakdown of underlying system parameters.</p>
+
+<div class="specs-table-wrapper">
+<table>
+<thead>
+<tr>
+<th>Sub-System Component</th>
+<th>Raspberry Pi 5 Specification Profile</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Processor Core Chipset</td>
+<td>Broadcom BCM2712 Application SoC, 16nm process geometry node</td>
+</tr>
+<tr>
+<td>Memory Architectures (RAM)</td>
+<td>High-speed <span class="tech-highlight">LPDDR4X-4267</span> variations (Available in 2GB, 4GB, or 8GB models)</td>
+</tr>
+<tr>
+<td>Wireless Infrastructure</td>
+<td>Dual-band 802.11ac Wi-Fi (2.4GHz / 5.0GHz) & Bluetooth 5.0 / BLE modules</td>
+</tr>
+<tr>
+<td>Camera/Display Pipeline Interfaces</td>
+<td>Dual 4-lane MIPI Transceiver lanes (supporting flexible combinations of 2 Cameras or 2 Displays)</td>
+</tr>
+<tr>
+<td>MicroSD Storage Performance</td>
+<td>High-speed SDR104 structural layout support (Double the maximum reading bandwidth over previous boards)</td>
+</tr>
+<tr>
+<td>Recommended Electrical Input</td>
+<td>5V / 5A DC input via Type-C connection, incorporating Power Delivery (PD) negotiation schemas</td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+
+</div>
+
+<footer>
+<p>&copy; 2026 Documentation Reference Vault. Independent educational portal layout guide. For full hardware compliance datasheets, visit the official channels.</p>
+</footer>
+
+</body>
+</html>
