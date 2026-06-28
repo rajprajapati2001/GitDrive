@@ -31,7 +31,7 @@
 
 ---
 # Screenshot 
-![image](assets/gitdrive_128x128.png)
+![image](assets/gitdrive_full_design.jpg)
 
 ---
 
@@ -57,8 +57,8 @@ GitDrive
 │       │   ├── eCommerce_page.html
 │       │   └── raspberry_pi_5.html
 │       ├── Videos
-│       │   ├── Michael Jackson - Billie Jean (Official Video) [Zi_XLOBDo_Y].mp4
-│       │   └── Quicksilver Saves Everyone - Sweet Dreams - X-Men： Apocalypse (2016) Movie Clip HD [ZnZqB5Z75zI].mp4
+│       │   ├── Michael Jackson - Billie Jean.mp4
+│       │   └── Sweet Dreams - X-Men：Quicksilver Saves Clip.mp4
 │       ├── code-in-the-repo.txt
 │       ├── config.json
 │       ├── database.json
@@ -66,6 +66,7 @@ GitDrive
 │       ├── README.txt
 │       └── setup.sh
 ├── assets
+│   ├── gitdrive_full_design.jpg
 │   └── gitdrive_128x128.png
 ├── src
 │   ├── components
